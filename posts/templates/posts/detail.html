@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ post.name }} {% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-4">
+    <div class="flex flex-wrap -mx-4">
+
+        <div class="w-full p-4 bg-gray-100 rounded-xl">
+            <div class="flex flex-wrap -mx-4">
+                <div class="w-full md:w-1/2 px-4">
+                    <img src="{{ post.image.url }}" class="w-full h-auto rounded-xl">
+                </div>
+                <div class="w-full md:w-1/2 px-4">
+                    <h1 class="mb-4 text-xl">{{ post.name }}</h1>
+                    <p class="text-gray-600"><strong>Blogger:</strong> {{ post.creator.username }}</p>
+
+                    {% if post.content %}
+                    <p class="mt-4 text-gray-700">
+                        <strong class="text-gray-600">Content:</strong><br>
+                        {{ post.content }}
+                    </p>
+                    {% endif %}
+
+                    {% if request.user == post.creator %}
+                    <div class="mt-4 p-4 bg-white rounded-xl">
+                        <p>This is your post!</p>
+                        <br>
+                        <a href="{% url 'post:edit' post.id %}"
+                            class="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Edit</a>
+                        <a href="{% url 'post:delete' post.id %}"
+                            class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Delete</a>
+                    </div>
+                    
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto mt-6">
+    <h2 class="mb-4 text-lg text-center">Related Posts</h2>
+    <div class="flex flex-wrap -mx-4">
+        {% for post in related %}
+        <div class="w-full md:w-1/3 px-4 mb-4">
+            <a href="{% url 'post:detail' post.id %}" class="text-decoration-none block">
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition">
+                    <img src="{{ post.image.url }}" class="w-full h-auto rounded-t-xl">
+                    <div class="p-4">
+                        <h2 class="text-xl">{{ post.name }}</h2>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

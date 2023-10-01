@@ -1,0 +1,68 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="py-6 px-6 flex justify-between posts-center bg-black border-b border-gray-200">
+        <a href="/" class="text-xl text-white font-semibold">BLOGNEST</a>
+
+        <div class="space-x-6">
+            <a href="/posts/new" class="text-lg text-white font-semibold hover:text-purple-500">+ Compose</a>
+            <a href="/posts/" class="text-lg text-white font-semibold hover:text-purple-500">Browse</a>
+
+
+            {% if request.user.is_authenticated %}
+            
+            <a href="{% url 'dashboard:index' %}"
+                class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+            <a href="{% url 'core:logout_page' %}"
+                class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Logout</a>
+            {% else %}
+            <a href="{% url 'core:signup' %}"
+                class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Signup</a>
+            <a href="{% url 'core:login' %}"
+                class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-gray-700">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="px-6 py-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <div class="w-2/3 pr-10">
+            <h3 class="mb-5 font-semibold text-gray-400">About</h3>
+
+            <p class="text-lg text-gray-500">Blogs are a powerful means of self-expression, knowledge-sharing, and communication. They allow individuals to share
+            their thoughts, experiences, and expertise with the world.
+            Blognest is your trusted companion on your blogging journey. We provide a user-friendly platform that simplifies the
+            blogging process. With easy-to-use tools, customizable templates, and a supportive community, we empower bloggers to
+            bring their ideas to life. Whether you're a seasoned blogger or just starting, Blognest offers a welcoming nest to
+            nurture your creativity and connect with like-minded individuals.
+            </p>
+        </div>
+
+        <div class="w-1/3">
+            <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+
+            <ul class="space-y-2">
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy policy</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Term of use</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
